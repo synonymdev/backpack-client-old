@@ -2,6 +2,8 @@ import secretBlob from 'secret-blob';
 import bint from 'bint8array';
 import sodium from 'sodium-native';
 
+const defaultPadding = 1024 * 128;
+
 /**
  * Creates a key
  * @param username
@@ -9,7 +11,7 @@ import sodium from 'sodium-native';
  * @param opts
  * @returns {Promise<string>} generated key as a hex string
  */
-export const createKeyHex = async (username: string, password: string, opts: any): Promise<string> => {
+export const createKey = async (username: string, password: string, opts: any): Promise<Uint8Array> => {
   const user = bint.fromString(username);
   const pass = bint.fromString(username);
 
@@ -33,5 +35,37 @@ export const createKeyHex = async (username: string, password: string, opts: any
   //Without this sleep an empty byte array will be returned ¯\_(ツ)_/¯
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  return bint.toString(key, 'hex');
+  return key;
+};
+
+/**
+ * Pads and encrypts a plain text blob with given key
+ * @param plaintext
+ * @param key
+ * @param pad
+ * @returns {Promise<any>}
+ */
+export const encrypt = (plaintext: Uint8Array, key: Uint8Array, pad = defaultPadding) => {
+  const padBuf = sodium.sodium_malloc(plaintext.byteLength + pad);
+  padBuf.set(plaintext);
+  const paddedLength = sodium.sodium_pad(padBuf, plaintext.byteLength, pad);
+  const padded = padBuf.subarray(0, paddedLength);
+
+  const encrypted = secretBlob.encrypt(padded, key);
+  sodium.sodium_free(padBuf);
+  return encrypted;
+};
+
+/**
+ * Decrypts with key and removes padding
+ * @param encrypted
+ * @param key
+ * @param pad
+ * @returns {any}
+ */
+export const decrypt = (encrypted: Uint8Array, key: Uint8Array, pad = defaultPadding): Uint8Array => {
+  const plaintext = secretBlob.decrypt(encrypted, key);
+  const unpaddedLength = sodium.sodium_unpad(plaintext, plaintext.byteLength, pad);
+
+  return plaintext.subarray(0, unpaddedLength);
 };
