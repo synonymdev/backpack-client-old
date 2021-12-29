@@ -31,13 +31,13 @@ export const createKey = async (
 
   const params = [key, password, salt, opslimit, memlimit, alg];
   if (!(typeof navigator !== 'undefined' && navigator.product === 'ReactNative')) {
-    //In react native an extra param is required for now
+    // In react native an extra param is required for now
     params.push(() => {});
   }
 
   await sodium.crypto_pwhash_async(...params);
 
-  //Without this sleep an empty byte array will be returned ¯\_(ツ)_/¯
+  // Without this sleep an empty byte array will be returned ¯\_(ツ)_/¯
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return key;

@@ -8,7 +8,7 @@ const opts = {
 
 const padding = 1024;
 
-describe('crypto lib functions', () => {
+describe('crypto lib', () => {
   it('creates key, encrypts and decrypts', async () => {
     //Create key
     const key = await createKey(bint.fromString('testuser'), bint.fromString('testpass'), opts);

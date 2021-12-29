@@ -14,7 +14,7 @@ jest.setTimeout(15000);
 
 describe('client integration', () => {
   it('instantiate a client, encrypt, store, retrieve and decrypt a backup', async () => {
-    const server = { id: process.env.SERVER_ID, url: process.env.SERVER_URL };
+    const server = { id: process.env.SERVER_ID as string, url: process.env.SERVER_URL as string };
 
     expect(server.id).toBeDefined();
     expect(server.url).toBeDefined();
