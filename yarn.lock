@@ -3120,7 +3120,7 @@ stack-utils@^2.0.3:
   dependencies:
     escape-string-regexp "^2.0.0"
 
-streamx@^2.10.1:
+streamx@^2.10.1, streamx@^2.7.1:
   version "2.12.0"
   resolved "https://registry.yarnpkg.com/streamx/-/streamx-2.12.0.tgz#0fe8ca49b0f86e5dfbd81659b39ee7c41f5793be"
   integrity sha512-PR93KgPkga2p27UhCI9lf096qPyRMDn/zemRQeAgr1azVLDMr8tZZGpgfEw2/cYY/8mTU4dshLMGNYBsNeQGQw==
@@ -3398,6 +3398,13 @@ webidl-conversions@^6.1.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-6.1.0.tgz#9111b4d7ea80acd40f5270d666621afa78b69514"
   integrity sha512-qBIvFLGiBpLjfwmYAaHPXsn+ho5xZnGvyGvsarywGNc8VyQJUMHJ8OBKGGrPER0okBeMDaan4mNBlgBROxuI8w==
 
+"webnet@git+ssh://git@github.com/chm-diederichs/webnet.git#d3b3535537dffb9efa045e6cecea8a244ec5387d":
+  version "1.0.0"
+  resolved "git+ssh://git@github.com/chm-diederichs/webnet.git#d3b3535537dffb9efa045e6cecea8a244ec5387d"
+  dependencies:
+    streamx "^2.7.1"
+    ws "^7.3.1"
+
 whatwg-encoding@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.5.tgz#5abacf777c32166a51d085d6b4f3e7d27113ddb0"
@@ -3455,7 +3462,7 @@ write-file-atomic@^3.0.0:
     signal-exit "^3.0.2"
     typedarray-to-buffer "^3.1.5"
 
-ws@^7.4.6:
+ws@^7.3.1, ws@^7.4.6:
   version "7.5.6"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.6.tgz#e59fc509fb15ddfb65487ee9765c5a51dec5fe7b"
   integrity sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==

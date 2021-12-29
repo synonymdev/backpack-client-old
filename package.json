@@ -42,6 +42,7 @@
     "handshake-peer": "^0.1.0",
     "secret-blob": "github:chm-diederichs/secret-blob",
     "sodium-native": "^3.2.1",
-    "spake2-ee": "^0.1.0"
+    "spake2-ee": "^0.1.0",
+    "webnet": "git+ssh://git@github.com/chm-diederichs/webnet.git#d3b3535537dffb9efa045e6cecea8a244ec5387d"
   }
 }
