@@ -13,8 +13,9 @@
     "test:unit": "yarn test -t \"crypto lib\"",
     "test:integration": "yarn test -t \"client integration\"",
     "build": "tsc",
-    "format": "prettier --write \"src/**/*.ts\" && tslint -p tsconfig.json",
-    "prepublish": "yarn run format && yarn run build && npm --no-git-tag-version version patch"
+    "lint": "tslint -p tsconfig.json",
+    "format": "prettier --write \"src/**/*.ts\" && yarn lint",
+    "prepublish": "yarn format && yarn build && npm --no-git-tag-version version patch"
   },
   "repository": {
     "type": "git",
