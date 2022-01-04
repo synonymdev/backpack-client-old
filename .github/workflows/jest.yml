@@ -1,10 +1,15 @@
-name: elint-check
+name: tests
 
-on: pull_request
+on:
+  pull_request:
+
+  push:
+    branches:
+      - 'main'
 
 jobs:
-  eslint:
-    name: Run lint check
+  tests:
+    name: Run jest unit tests
     runs-on: ubuntu-latest
 
     steps:
@@ -25,11 +30,9 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Lint check
-        run: yarn lint
+      - name: Unit test
+        run: yarn test:unit
 
-      - name: Run linters
-        uses: tinovyatkin/action-eslint@a62d4ab3ea77b401bd40d1dfbd1ff053b3aa9307
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          check-name: eslint
+      - name: Unit integration
+        run: SERVER_ID=${{ secrets.SERVER_ID }} SERVER_URL=${{ secrets.SERVER_URL }} yarn test:integration
+
