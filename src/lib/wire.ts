@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 const FLAGS = {
   CONNECT: 0x7e,
   REGISTER: 0x7f,
