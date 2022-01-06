@@ -5,3 +5,4 @@ dist
 .DS_Store
 src/schemes/*.js
 src/schemes/*.d.ts
+yarn-error.log
