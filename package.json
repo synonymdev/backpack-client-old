@@ -16,7 +16,8 @@
     "postinstall": "yarn protobuff:bitkit",
     "format": "prettier --write \"src/**/*.ts\" && tslint -p tsconfig.json",
     "prepublish": "yarn run format && yarn run build && npm --no-git-tag-version version patch",
-    "protobuff:bitkit": "pbjs -t static-module -w commonjs -o src/schemes/bitkit.js src/schemes/bitkit.proto && pbjs -t static-module src/schemes/bitkit.proto | pbts -o src/schemes/bitkit.d.ts -"
+    "protobuff:bitkit": "pbjs -t static-module -w commonjs -o src/schemes/bitkit.js src/schemes/bitkit.proto && pbjs -t static-module src/schemes/bitkit.proto | pbts -o src/schemes/bitkit.d.ts -",
+    "lint": "tslint -p tsconfig.json",
   },
   "repository": {
     "type": "git",
