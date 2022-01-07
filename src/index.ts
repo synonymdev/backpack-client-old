@@ -3,11 +3,14 @@ import Spake from 'spake2-ee';
 import SpakeChannel from 'handshake-peer/spake';
 import bint from 'bint8array';
 import { encrypt, decrypt, createKey, HashingOptions } from './lib/crypto';
-import { frame } from './lib/helpers';
+import { frame, isReactNative } from './lib/helpers';
 
 const { RegisterMessage, ConnectMessage, RPC } = require('./lib/wire');
 
-const WebSocket = require('ws');
+// Can't be included in RN
+if (!isReactNative()) {
+  global.WebSocket = require('ws');
+}
 
 interface ServerInfo {
   id: string | Uint8Array;
@@ -27,6 +30,7 @@ interface Auth {
  */
 const defaultConnect = (info: ServerInfo, cb: Function) => {
   const socket = new WebSocket(info.url);
+  // @ts-ignore
   socket.onerror = (socketErr: Error): void => cb(socketErr);
 
   // socket must have stream api
