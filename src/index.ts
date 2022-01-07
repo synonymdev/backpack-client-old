@@ -4,6 +4,7 @@ import SpakeChannel from 'handshake-peer/spake';
 import bint from 'bint8array';
 import { encrypt, decrypt, createKey, HashingOptions } from './lib/crypto';
 import { frame, isReactNative } from './lib/helpers';
+import schemas from './schemas';
 
 const { RegisterMessage, ConnectMessage, RPC } = require('./lib/wire');
 
@@ -41,7 +42,7 @@ const defaultConnect = (info: ServerInfo, cb: Function) => {
 
 const missingKeyError = 'Encryption key required. Call createKey or setKey first.';
 
-export default class Client {
+class Client {
   private readonly serverInfo: ServerInfo;
   private readonly username: Uint8Array;
   private readonly password: Uint8Array;
@@ -172,3 +173,6 @@ export default class Client {
     return decrypt(bint.concat(chunks), this.key, this.padding);
   }
 }
+
+export default Client;
+export { schemas };
