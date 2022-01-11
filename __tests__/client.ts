@@ -10,6 +10,8 @@ const username = 'testuser';
 const password = 'testpass';
 const padding = 1024;
 
+global.WebSocket = require('ws');
+
 jest.setTimeout(15000);
 
 describe('client integration', () => {

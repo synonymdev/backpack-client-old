@@ -3,15 +3,10 @@ import Spake from 'spake2-ee';
 import SpakeChannel from 'handshake-peer/spake';
 import bint from 'bint8array';
 import { encrypt, decrypt, createKey, HashingOptions } from './lib/crypto';
-import { frame, isReactNative } from './lib/helpers';
-import schemas from './schemas';
+import { frame } from './lib/helpers';
+import Bitkit from './schemas/bitkit';
 
 const { RegisterMessage, ConnectMessage, RPC } = require('./lib/wire');
-
-// Can't be included in RN
-if (!isReactNative()) {
-  global.WebSocket = require('ws');
-}
 
 interface ServerInfo {
   id: string | Uint8Array;
@@ -23,6 +18,8 @@ interface Auth {
   password: string;
   keyHex?: string;
 }
+
+type TConnect = (info: ServerInfo, cb: Function) => void;
 
 /**
  * Default server connection
@@ -48,10 +45,16 @@ class Client {
   private readonly password: Uint8Array;
   private key: Uint8Array | undefined;
   private readonly opts: HashingOptions;
-  private readonly connect: (info: ServerInfo, cb: Function) => void;
+  private readonly connect: TConnect;
   private readonly padding: number;
 
-  constructor(auth: Auth, server: ServerInfo, opts: HashingOptions, padding: number, connect = defaultConnect) {
+  constructor(
+    auth: Auth,
+    server: ServerInfo,
+    opts: HashingOptions,
+    padding: number,
+    connect: TConnect = defaultConnect,
+  ) {
     if (typeof server.id === 'string') {
       server.id = bint.fromString(server.id);
     }
@@ -94,10 +97,6 @@ class Client {
    * @returns {Promise<unknown>}
    */
   async register(): Promise<void> {
-    if (!this.key) {
-      throw new Error(missingKeyError);
-    }
-
     return new Promise((resolve, reject) => {
       this.connect(this.serverInfo, (err: Error, transport: any) => {
         if (err) return reject(err);
@@ -157,7 +156,6 @@ class Client {
     if (!this.key) {
       throw new Error(missingKeyError);
     }
-
     const chan = await this.channel();
 
     const chunks: number[] = [];
@@ -175,4 +173,4 @@ class Client {
 }
 
 export default Client;
-export { schemas };
+export { Bitkit };

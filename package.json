@@ -1,6 +1,6 @@
 {
   "name": "@synonymdev/backpack-client",
-  "version": "1.0.7",
+  "version": "1.0.11",
   "description": "Client side for creating and retrieving backpack backups.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,11 +12,15 @@
     "test": "jest",
     "test:unit": "yarn test -t \"crypto lib\"",
     "test:integration": "yarn test -t \"client integration\"",
-    "build": "tsc && yarn protobuff:bitkit",
+    "build": "tsc && yarn protobuff:bitkit && yarn build:copyprotos",
+    "build:copyprotos": "cp src/schemas/*.{d.ts,js} ./dist/schemas",
     "format": "prettier --write \"src/**/*.ts\" && tslint -p tsconfig.json",
     "prepublish": "yarn run format && yarn run build && npm --no-git-tag-version version patch",
     "protobuff:bitkit": "pbjs -t static-module -w commonjs -o src/schemas/bitkit.js src/schemas/bitkit.proto && pbjs -t static-module src/schemas/bitkit.proto | pbts -o src/schemas/bitkit.d.ts -",
     "lint": "tslint -p tsconfig.json"
+  },
+  "react-native": {
+    "sodium-native": "react-native-libsodium"
   },
   "repository": {
     "type": "git",
@@ -40,7 +44,9 @@
     "ts-jest": "^27.1.2",
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "websocket-stream": "^5.5.2",
+    "streamx": "^2.10.1"
   },
   "dependencies": {
     "bint8array": "^1.1.2",
