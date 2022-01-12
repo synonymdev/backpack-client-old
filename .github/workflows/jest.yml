@@ -27,6 +27,9 @@ jobs:
           key: ${{ secrets.TEST_USER_SSH_KEY }}
           known_hosts: ${{ secrets.TEST_USER_KNOWN_HOSTS }}
 
+      - name: Check schemes
+        run: ls src/schemas
+  
       - name: Install dependencies
         run: yarn install
 
