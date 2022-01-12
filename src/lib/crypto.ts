@@ -1,6 +1,7 @@
 import secretBlob from 'secret-blob';
 import bint from 'bint8array';
 import sodium from 'sodium-native';
+import { isReactNative } from './helpers';
 
 export interface HashingOptions {
   memlimit?: number;
@@ -30,8 +31,8 @@ export const createKey = async (
   const key = sodium.sodium_malloc(32);
 
   const params = [key, password, salt, opslimit, memlimit, alg];
-  if (!(typeof navigator !== 'undefined' && navigator.product === 'ReactNative')) {
-    // In react native an extra param is required for now
+  if (!isReactNative()) {
+    // If not react native an extra param is required for now
     params.push(() => {});
   }
 

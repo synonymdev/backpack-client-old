@@ -16,13 +16,14 @@ jobs:
         with:
           node-version: 12
 
-      - name: Install Node.js dependencies
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.TEST_USER_SSH_KEY }}
+          known_hosts: ${{ secrets.TEST_USER_KNOWN_HOSTS }}
+
+      - name: Install dependencies
         run: yarn install
 
       - name: Lint check
         run: yarn lint
-
-      - name: Run linters
-        uses: tinovyatkin/action-eslint@a62d4ab3ea77b401bd40d1dfbd1ff053b3aa9307
-        with:
-          check-name: eslint
