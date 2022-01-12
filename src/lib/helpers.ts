@@ -6,3 +6,5 @@ export const frame = (buf: Uint8Array) => {
 
   return ret;
 };
+
+export const isReactNative = (): boolean => typeof navigator !== 'undefined' && navigator.product === 'ReactNative';

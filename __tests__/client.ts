@@ -10,6 +10,8 @@ const username = 'testuser';
 const password = 'testpass';
 const padding = 1024;
 
+global.WebSocket = require('ws');
+
 jest.setTimeout(15000);
 
 describe('client integration', () => {
@@ -21,10 +23,7 @@ describe('client integration', () => {
 
     const client = new Client({ username, password }, server, opts, padding);
 
-    //Needs to fail if a key has not been set/created
-    await expect(client.register()).rejects.toThrow();
-
-    const cachedKeyHex = await client.createKey();
+    await client.register();
 
     //Registration works after key is created
     await expect(client.register()).resolves.not.toThrow();
@@ -32,6 +31,12 @@ describe('client integration', () => {
     //Store backup
     const uniqueBackupStr = `Back me up ${new Date().toString()}`;
     const backup = bint.fromString(uniqueBackupStr);
+
+    //Needs to fail if a key has not been set/created
+    await expect(client.store(backup)).rejects.toThrow();
+
+    const cachedKeyHex = await client.createKey();
+
     await expect(client.store(backup)).resolves.not.toThrow();
 
     //Retrieve backup

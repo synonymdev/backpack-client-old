@@ -1,0 +1,41 @@
+name: tests
+
+on:
+  pull_request:
+
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  tests:
+    name: Run jest unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.TEST_USER_SSH_KEY }}
+          known_hosts: ${{ secrets.TEST_USER_KNOWN_HOSTS }}
+
+      - name: Check schemes
+        run: ls src/schemas
+  
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Unit test
+        run: yarn test:unit
+
+      - name: Unit integration
+        run: SERVER_ID=${{ secrets.SERVER_ID }} SERVER_URL=${{ secrets.SERVER_URL }} yarn test:integration
+
